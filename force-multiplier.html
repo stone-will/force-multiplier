@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Force Multiplier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0b1f35;
+      --slate:   #1c3d5a;
+      --steel:   #2e6b9e;
+      --fog:     #e8edf2;
+      --cream:   #f7f5f1;
+      --white:   #ffffff;
+      --gold:    #c8963e;
+      --red:     #b83232;
+      --text:    #1a1a1a;
+      --muted:   #6b7685;
+      --border:  rgba(0,0,0,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 60px;
+      background: rgba(11,31,53,0.97);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: white; }
+
+    .nav-cta {
+      background: var(--gold) !important;
+      color: var(--navy) !important;
+      padding: 0.4rem 1.1rem;
+      border-radius: 3px;
+      font-weight: 600 !important;
+    }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 3rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #home::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse at 70% 50%, rgba(46,107,158,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(200,150,62,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Subtle grid texture */
+    #home::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 680px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    h1.hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      color: white;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    h1.hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.8;
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 0.85rem 2rem;
+      border-radius: 3px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-gold:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.8);
+      padding: 0.85rem 2rem;
+      border-radius: 3px;
+      text-decoration: none;
+      font-weight: 400;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, color 0.2s;
+      display: inline-block;
+    }
+
+    .btn-outline:hover { border-color: white; color: white; }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      z-index: 1;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--white);
+      padding: 6rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .about-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .about-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+      color: var(--navy);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+
+    .about-body {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: #444;
+      line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+
+    .about-body strong { font-weight: 600; color: var(--navy); }
+
+    .about-photo {
+      background: var(--fog);
+      border-radius: 6px;
+      aspect-ratio: 4/5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      border: 2px dashed rgba(0,0,0,0.1);
+    }
+
+    .about-photo-icon { font-size: 3rem; opacity: 0.3; }
+
+    .about-photo-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* ── MAP SECTION ── */
+    #map {
+      background: var(--navy);
+      padding: 5rem 0 6rem;
+      overflow: hidden;
+    }
+
+    .map-header {
+      padding: 0 3rem;
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .map-header-left .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .map-header-left h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 2.5vw, 2.6rem);
+      color: white;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .map-header-left h2 em { font-style: italic; color: var(--gold); }
+
+    .map-header-right {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.4);
+      max-width: 280px;
+      line-height: 1.7;
+      text-align: right;
+    }
+
+    /* ── EXPLORER ── */
+    .explorer {
+      padding: 0 3rem;
+      display: flex;
+      gap: 0;
+      align-items: flex-start;
+      min-height: 520px;
+      position: relative;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      padding: 0 3rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      min-height: 28px;
+    }
+
+    .breadcrumb-item {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.35);
+      cursor: pointer;
+      transition: color 0.2s;
+      letter-spacing: 0.04em;
+    }
+
+    .breadcrumb-item:hover { color: rgba(255,255,255,0.7); }
+    .breadcrumb-item.active { color: var(--gold); cursor: default; }
+
+    .breadcrumb-sep {
+      color: rgba(255,255,255,0.2);
+      font-size: 0.7rem;
+    }
+
+    /* Main tile (left) */
+    .main-tile {
+      flex-shrink: 0;
+      width: 300px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 2rem;
+      position: relative;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.35s ease;
+    }
+
+    .main-tile-depth {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      opacity: 0.8;
+    }
+
+    .main-tile-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: white;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+
+    .main-tile-desc {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.75;
+      font-weight: 300;
+      flex: 1;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.5);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: all 0.2s;
+      width: fit-content;
+    }
+
+    .back-btn:hover {
+      border-color: rgba(255,255,255,0.35);
+      color: white;
+    }
+
+    /* Connector */
+    .explorer-connector {
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      flex-shrink: 0;
+      align-self: stretch;
+      position: relative;
+    }
+
+    .explorer-connector::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(to right, rgba(200,150,62,0.4), rgba(200,150,62,0.1));
+    }
+
+    /* Children column */
+    .children-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      flex: 1;
+      max-width: 560px;
+    }
+
+    .children-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 0.25rem;
+      padding-left: 0.25rem;
+    }
+
+    /* Child tile */
+    .child-tile {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 7px;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    }
+
+    .child-tile:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(200,150,62,0.3);
+      transform: translateX(4px);
+    }
+
+    .child-tile-title {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.01em;
+    }
+
+    .child-tile-arrow {
+      color: rgba(200,150,62,0.5);
+      font-size: 0.8rem;
+      flex-shrink: 0;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .child-tile:hover .child-tile-arrow {
+      color: var(--gold);
+      transform: translateX(3px);
+    }
+
+    .child-tile.is-leaf .child-tile-arrow::after { content: '↩'; font-size: 0.7rem; }
+    .child-tile:not(.is-leaf) .child-tile-arrow::after { content: '→'; }
+
+    /* ── FLIP CARD (leaf nodes) ── */
+    .flip-wrapper {
+      perspective: 1200px;
+      width: 300px;
+      flex-shrink: 0;
+      min-height: 320px;
+    }
+
+    .flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 320px;
+      transform-style: preserve-3d;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .flip-inner.flipped { transform: rotateY(180deg); }
+
+    .flip-front, .flip-back {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      min-height: 320px;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      padding: 2rem;
+    }
+
+    .flip-front {
+      background: rgba(200,150,62,0.12);
+      border: 1px solid rgba(200,150,62,0.25);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .flip-front-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .flip-front-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .flip-front-sub {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+      font-weight: 300;
+      flex: 1;
+    }
+
+    .flip-btn {
+      margin-top: 1.5rem;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 3px;
+      padding: 0.6rem 1.2rem;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      width: fit-content;
+      letter-spacing: 0.03em;
+    }
+
+    .flip-btn:hover { opacity: 0.85; }
+
+    .flip-back {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.1);
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .flip-back-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .flip-back-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--navy);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .flip-back-coming {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 0.75rem;
+      padding: 1rem 0;
+    }
+
+    .coming-icon { font-size: 2rem; opacity: 0.4; }
+
+    .coming-text {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .coming-cta {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background: var(--navy);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 3px;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+
+    .coming-cta:hover { opacity: 0.85; }
+
+    .flip-back-btn {
+      margin-top: 1rem;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.75rem;
+      transition: all 0.2s;
+      width: fit-content;
+    }
+
+    .flip-back-btn:hover { border-color: var(--navy); color: var(--navy); }
+
+    /* ── GIVE BACK ── */
+    #give {
+      background: var(--cream);
+      padding: 6rem 3rem;
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    #give .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    #give h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    #give h2 em { font-style: italic; }
+
+    .give-quote {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: #555;
+      line-height: 1.85;
+      max-width: 620px;
+      margin: 0 auto 2.5rem;
+      border-left: 3px solid var(--gold);
+      padding-left: 1.5rem;
+      text-align: left;
+      font-style: italic;
+    }
+
+    .charity-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .charity-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: left;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .charity-card:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+
+    .charity-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--navy);
+      margin-bottom: 0.35rem;
+    }
+
+    .charity-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .charity-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(200,150,62,0.3);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+    }
+
+    .charity-link:hover { border-color: var(--gold); }
+
+    /* ── BOOK A CALL ── */
+    #contact {
+      background: var(--navy);
+      padding: 6rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #contact::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 80% 50%, rgba(200,150,62,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .contact-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-left .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .contact-left h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+      color: white;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-left p {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .calendar-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--gold);
+      color: var(--navy);
+      padding: 0.9rem 1.8rem;
+      border-radius: 3px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .calendar-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .form-group label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      color: white;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: rgba(200,150,62,0.5); }
+
+    .form-group select option { background: var(--navy); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+
+    .form-submit {
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 3px;
+      padding: 0.85rem 1.8rem;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      align-self: flex-start;
+      margin-top: 0.5rem;
+    }
+
+    .form-submit:hover { opacity: 0.85; }
+
+    .form-success {
+      display: none;
+      background: rgba(200,150,62,0.1);
+      border: 1px solid rgba(200,150,62,0.25);
+      border-radius: 6px;
+      padding: 1.5rem;
+      color: white;
+      text-align: center;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060f18;
+      padding: 1.8rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    footer p {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    footer a {
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      font-size: 0.78rem;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: rgba(255,255,255,0.7); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-12px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .animate-in { animation: slideIn 0.3s ease both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+      #home { padding: 90px 1.5rem 4rem; }
+      #about { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 1.5rem; }
+      .about-photo { display: none; }
+      #map { padding: 4rem 0 5rem; }
+      .map-header { padding: 0 1.5rem; }
+      .map-header-right { display: none; }
+      .explorer { padding: 0 1.5rem; flex-direction: column; }
+      .main-tile, .flip-wrapper { width: 100%; }
+      .children-col { max-width: 100%; }
+      .explorer-connector { display: none; }
+      #give { padding: 4rem 1.5rem; }
+      #contact { padding: 4rem 1.5rem; }
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">Force <span>Multiplier</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#map">The Map</a></li>
+    <li><a href="#give">Give Back</a></li>
+    <li><a href="#contact" class="nav-cta">Book a Call</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">For UK Officers Leaving the Armed Forces</div>
+    <h1 class="hero-title">Your service<br>was the<br><em>beginning.</em></h1>
+    <p class="hero-sub">A clear-eyed guide to civilian careers for officers leaving the British Armed Forces. No jargon. No institution. Just honest advice from someone who has made the transition.</p>
+    <div class="hero-actions">
+      <a href="#map" class="btn-gold">Explore the Map</a>
+      <a href="#contact" class="btn-outline">Book a Call</a>
+    </div>
+  </div>
+  <div class="hero-scroll">↓ scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div>
+    <p class="about-label">About This Site</p>
+    <h2 class="about-title">Built by someone who has been there.</h2>
+    <p class="about-body">
+      After <strong>six years in the Army</strong>, I took an MBA and moved into finance. Along the way, I benefitted enormously from the generosity of people who had made the transition before me — people who took the time to explain how the civilian world actually works.
+    </p>
+    <p class="about-body">
+      This site is my attempt to pass that on. Not a list of resources. Not a government checklist. A genuine map of the landscape, written for officers who are ambitious, capable, and just need someone to explain what's out there.
+    </p>
+    <p class="about-body">
+      <strong>Add your photo and a line or two about yourself here.</strong>
+    </p>
+  </div>
+  <div class="about-photo">
+    <div class="about-photo-icon">📷</div>
+    <p class="about-photo-label">Add your photo here.<br>A headshot works well.</p>
+  </div>
+</section>
+
+<!-- MAP -->
+<section id="map">
+  <div class="map-header">
+    <div class="map-header-left">
+      <p class="section-label">Interactive Career Map</p>
+      <h2>Where do you go from<br><em>here?</em></h2>
+    </div>
+    <p class="map-header-right">Click any tile to explore that path. Navigate right to go deeper, left to go back.</p>
+  </div>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb" id="breadcrumb"></div>
+
+  <!-- Explorer -->
+  <div class="explorer" id="explorer"></div>
+</section>
+
+<!-- GIVE BACK -->
+<section id="give">
+  <p class="section-label">Give Back</p>
+  <h2>Talk is cheap.<br><em>Time isn't.</em></h2>
+  <p class="give-quote">
+    If you've found this useful, consider saying thank you by giving a few quid to a good cause. The military community is strengthened by the people within it — and these charities do vital work.
+  </p>
+  <div class="charity-cards">
+    <div class="charity-card">
+      <p class="charity-name">Combat Stress</p>
+      <p class="charity-desc">The UK's leading charity for veterans' mental health. Providing specialist treatment and support for those dealing with trauma.</p>
+      <a class="charity-link" href="https://www.combatstress.org.uk/donate" target="_blank">Donate →</a>
+    </div>
+    <div class="charity-card">
+      <p class="charity-name">Walking With The Wounded</p>
+      <p class="charity-desc">Supporting wounded, injured and sick veterans back into employment and independence.</p>
+      <a class="charity-link" href="https://walkingwiththewounded.org.uk/donate" target="_blank">Donate →</a>
+    </div>
+    <div class="charity-card">
+      <p class="charity-name">SSAFA</p>
+      <p class="charity-desc">The Armed Forces charity providing lifelong support to serving personnel, veterans and their families.</p>
+      <a class="charity-link" href="https://www.ssafa.org.uk/donate" target="_blank">Donate →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <p class="section-label">Get in Touch</p>
+      <h2>Not sure where to start?</h2>
+      <p>Send a message and I'll get back to you within 48 hours. Or book a free 30-minute call — sometimes it's easier to talk it through.</p>
+      <a href="#" class="calendar-btn">📅 &nbsp;Book a free 30-min call</a>
+    </div>
+    <div>
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First name</label>
+            <input type="text" placeholder="James" required/>
+          </div>
+          <div class="form-group">
+            <label>Last name</label>
+            <input type="text" placeholder="Wilson" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="your@email.com" required/>
+        </div>
+        <div class="form-group">
+          <label>Service background</label>
+          <select>
+            <option value="">Select branch</option>
+            <option>British Army</option>
+            <option>Royal Navy</option>
+            <option>Royal Air Force</option>
+            <option>Royal Marines</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>What's on your mind?</label>
+          <textarea placeholder="Tell me where you're at and what you're trying to figure out..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message →</button>
+      </form>
+      <div class="form-success" id="formSuccess">
+        ✅ &nbsp;Message received — I'll be in touch within 48 hours.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Force Multiplier &nbsp;·&nbsp; Built for those who served.</p>
+  <div style="display:flex;gap:1.5rem;">
+    <a href="#">Privacy</a>
+    <a href="#">Accessibility</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// TREE DATA
+// desc: shown on the large left tile
+// children: array of child node ids
+// leaf: true = flip card behaviour
+// ═══════════════════════════════════════════════════════════
+const TREE = {
+  root: {
+    title: "Last Day in Uniform",
+    desc: "The moment everything changes — and the moment your real options open up. This map helps you understand the landscape of what comes next.",
+    children: ["learning","earning","building"]
+  },
+
+  // ── LEARNING ──
+  learning: {
+    title: "Learning",
+    desc: "Some officers choose to invest in formal education before entering the workforce. This can open doors, build networks, and give you time to think clearly about what you want.",
+    children: ["short_course","part_time","full_time"]
+  },
+  short_course: {
+    title: "Short Course",
+    desc: "Targeted qualifications that can be completed quickly, often alongside job searching. A strong way to signal commitment to a new field without committing to years of study.",
+    children: ["imc","pmp"]
+  },
+  imc: {
+    title: "IMC",
+    desc: "Content coming soon.",
+    leaf: true
+  },
+  pmp: {
+    title: "PMP",
+    desc: "Content coming soon.",
+    leaf: true
+  },
+  part_time: {
+    title: "Part-time Study",
+    desc: "Combining work and study. Increasingly common as employers support professional development. Allows you to earn while you learn and apply theory in real time.",
+    children: ["mba_pt"]
+  },
+  mba_pt: {
+    title: "MBA (Part-time)",
+    desc: "Content coming soon.",
+    leaf: true
+  },
+  full_time: {
+    title: "Full-time Study",
+    desc: "Committing fully to education. A significant investment in time and money, but one that can fundamentally shift your trajectory and open up competitive graduate programmes.",
+    children: ["mba_ft"]
+  },
+  mba_ft: {
+    title: "MBA (Full-time)",
+    desc: "Content coming soon.",
+    leaf: true
+  },
+
+  // ── EARNING ──
+  earning: {
+    title: "Earning",
+    desc: "The majority of officers move directly into employment. The landscape is broader than most realise — this map is designed to give you a clear picture of what's out there.",
+    children: ["private","public","purposeled"]
+  },
+
+  // Private Sector
+  private: {
+    title: "Private Sector",
+    desc: "The largest and most varied part of the economy. Private sector roles tend to offer higher financial upside and faster progression, in exchange for less job security than the public sector.",
+    children: ["consulting","finance","corporate","technology"]
+  },
+
+  // Consulting
+  consulting: {
+    title: "Consulting",
+    desc: "Advising organisations on how to solve problems and improve performance. A natural fit for officers — the work is project-based, analytical, and rewards leadership under ambiguity.",
+    children: ["strategy","defence_consulting","operations_consulting"]
+  },
+  strategy: {
+    title: "Strategy Consulting",
+    desc: "The most competitive and prestigious end of consulting. Strategy consultants advise senior leadership on the most complex, high-stakes decisions a business faces.",
+    children: ["mbb","big4","boutique"]
+  },
+  mbb: {
+    title: "MBB",
+    desc: "Content coming soon.",
+    leaf: true
+  },
+  big4: {
+    title: "Big 4",
+    desc: "Content coming soon.",
+    leaf: true
+  },
+  boutique: {
+    title: "Boutique",
+    desc: "Content coming soon.",
+    leaf: true
+  },
+  defence_consulting: {
+    title: "Defence Consulting",
+    desc: "Content coming soon.",
+    leaf: true
+  },
+  operations_consulting: {
+    title: "Operations Consulting",
+    desc: "Content coming soon.",
+    leaf: true
+  },
+
+  // Finance
+  finance: {
+    title: "Finance",
+    desc: "One of the most common destinations for officers, and one of the least well understood from the outside. The word 'finance' covers enormously different roles, cultures, and skillsets.",
+    children: ["asset_mgmt","capital_markets","inv_banking","insurance"]
+  },
+  asset_mgmt: {
+    title: "Asset Management",
+    desc: "Managing pools of capital on behalf of clients — pension funds, institutions, or individuals. A world of analysis, conviction, and long-term thinking.",
+    children: ["multi_asset","hedge_funds","pe_credit","wealth_mgmt","real_assets"]
+  },
+  multi_asset: { title: "Multi-asset", desc: "Content coming soon.", leaf: true },
+  hedge_funds: { title: "Hedge Funds", desc: "Content coming soon.", leaf: true },
+  pe_credit:   { title: "Private Equity / Credit", desc: "Content coming soon.", leaf: true },
+  wealth_mgmt: { title: "Wealth Management", desc: "Content coming soon.", leaf: true },
+  real_assets: { title: "Real Assets", desc: "Content coming soon.", leaf: true },
+
+  capital_markets: {
+    title: "Capital Markets",
+    desc: "Where companies and governments raise money by issuing stocks and bonds. Fast-paced, relationship-driven, and analytically demanding.",
+    children: ["sales_trading","ecm","dcm","research","structuring"]
+  },
+  sales_trading: { title: "Sales & Trading", desc: "Content coming soon.", leaf: true },
+  ecm:           { title: "Equity Capital Markets", desc: "Content coming soon.", leaf: true },
+  dcm:           { title: "Debt Capital Markets", desc: "Content coming soon.", leaf: true },
+  research:      { title: "Research", desc: "Content coming soon.", leaf: true },
+  structuring:   { title: "Structuring", desc: "Content coming soon.", leaf: true },
+
+  inv_banking: {
+    title: "Investment Banking",
+    desc: "Advisory work for companies on their most significant transactions — mergers, acquisitions, fundraising. Intense, well-compensated, and highly prestigious.",
+    children: ["ma","lev_finance","restructuring"]
+  },
+  ma:            { title: "Mergers & Acquisitions", desc: "Content coming soon.", leaf: true },
+  lev_finance:   { title: "Leveraged Finance", desc: "Content coming soon.", leaf: true },
+  restructuring: { title: "Restructuring", desc: "Content coming soon.", leaf: true },
+
+  insurance: {
+    title: "Insurance",
+    desc: "The business of pricing and transferring risk. Underrated by many officers — it is analytically rigorous, globally significant, and offers a range of entry points.",
+    children: ["underwriting","broking","claims","actuarial","reinsurance"]
+  },
+  underwriting: { title: "Underwriting", desc: "Content coming soon.", leaf: true },
+  broking:      { title: "Broking", desc: "Content coming soon.", leaf: true },
+  claims:       { title: "Claims", desc: "Content coming soon.", leaf: true },
+  actuarial:    { title: "Actuarial", desc: "Content coming soon.", leaf: true },
+  reinsurance:  { title: "Reinsurance", desc: "Content coming soon.", leaf: true },
+
+  // Corporate
+  corporate: {
+    title: "Corporate",
+    desc: "Working within a company rather than advising one. Corporate roles span every sector and function — more content on specific paths coming soon.",
+    leaf: true
+  },
+
+  // Technology
+  technology: {
+    title: "Technology",
+    desc: "One of the fastest-growing sectors for officer transitions. Technology companies reward leadership, operational clarity, and the ability to work under pressure.",
+    children: ["fintech","defence_tech","enterprise_tech"]
+  },
+  fintech:       { title: "FinTech", desc: "Content coming soon.", leaf: true },
+  defence_tech:  { title: "Defence Tech", desc: "Content coming soon.", leaf: true },
+  enterprise_tech: { title: "Enterprise Tech", desc: "Content coming soon.", leaf: true },
+
+  // Public Sector
+  public: {
+    title: "Public Sector",
+    desc: "Roles funded and run by the state. Typically offer greater job security, strong pensions, and the opportunity to continue serving the public in a different capacity.",
+    children: ["civil_service","police"]
+  },
+  civil_service: { title: "Civil Service", desc: "Content coming soon.", leaf: true },
+  police:        { title: "Police", desc: "Content coming soon.", leaf: true },
+
+  // Purpose-led
+  purposeled: {
+    title: "Purpose-led",
+    desc: "Organisations driven by mission rather than profit. Often attract officers who want to maintain a sense of service and impact in their civilian career.",
+    children: ["charity","ngo"]
+  },
+  charity: { title: "Charity", desc: "Content coming soon.", leaf: true },
+  ngo:     { title: "NGO", desc: "Content coming soon.", leaf: true },
+
+  // ── BUILDING ──
+  building: {
+    title: "Building",
+    desc: "Content coming soon.",
+    leaf: true
+  }
+};
+
+// ═══════════════════════════════════════════════════════════
+// EXPLORER ENGINE
+// ═══════════════════════════════════════════════════════════
+let path = ['root']; // stack of node ids
+let flipped = false;
+
+function currentNode() { return TREE[path[path.length - 1]]; }
+function currentId()   { return path[path.length - 1]; }
+
+function navigate(id) {
+  path.push(id);
+  flipped = false;
+  render();
+}
+
+function goBack() {
+  if (path.length > 1) {
+    path.pop();
+    flipped = false;
+    render();
+  }
+}
+
+function goTo(index) {
+  path = path.slice(0, index + 1);
+  flipped = false;
+  render();
+}
+
+function render() {
+  renderBreadcrumb();
+  renderExplorer();
+}
+
+function renderBreadcrumb() {
+  const bc = document.getElementById('breadcrumb');
+  bc.innerHTML = path.map((id, i) => {
+    const node = TREE[id];
+    const isLast = i === path.length - 1;
+    return `
+      ${i > 0 ? '<span class="breadcrumb-sep">›</span>' : ''}
+      <span class="breadcrumb-item ${isLast ? 'active' : ''}"
+            onclick="${isLast ? '' : `goTo(${i})`}">
+        ${node.title}
+      </span>
+    `;
+  }).join('');
+}
+
+function renderExplorer() {
+  const explorer = document.getElementById('explorer');
+  const node = currentNode();
+  const id = currentId();
+
+  // Leaf node — flip card
+  if (node.leaf) {
+    explorer.innerHTML = `
+      <div class="flip-wrapper">
+        <div class="flip-inner ${flipped ? 'flipped' : ''}" id="flipInner">
+          <div class="flip-front">
+            <div>
+              <div class="flip-front-label">Career Path</div>
+              <div class="flip-front-title">${node.title}</div>
+              <div class="flip-front-sub">Click below to find out what this role involves, what skills transfer, and what people do next.</div>
+            </div>
+            <button class="flip-btn" onclick="doFlip()">Find out more ↩</button>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-label">Career Detail</div>
+            <div class="flip-back-title">${node.title}</div>
+            <div class="flip-back-coming">
+              <div class="coming-icon">✍️</div>
+              <p class="coming-text">Detailed content for this career path is coming soon.<br>In the meantime, book a call to talk it through.</p>
+              <a href="#contact" class="coming-cta">📅 Book a free call</a>
+            </div>
+            <button class="flip-back-btn" onclick="doFlip()">← Flip back</button>
+          </div>
+        </div>
+      </div>
+      ${path.length > 1 ? `
+        <div class="explorer-connector"></div>
+        <div style="display:flex;align-items:center;">
+          <button class="back-btn" onclick="goBack()">← Back</button>
+        </div>
+      ` : ''}
+    `;
+    return;
+  }
+
+  // Branch node — main tile + children
+  const childrenHtml = node.children.map(cid => {
+    const child = TREE[cid];
+    const isLeaf = !!child.leaf;
+    return `
+      <div class="child-tile ${isLeaf ? 'is-leaf' : ''} animate-in"
+           onclick="navigate('${cid}')">
+        <span class="child-tile-title">${child.title}</span>
+        <span class="child-tile-arrow"></span>
+      </div>
+    `;
+  }).join('');
+
+  const depthLabels = ['Start here', 'Top-level route', 'Sector', 'Specialism', 'Role'];
+  const depthLabel = depthLabels[Math.min(path.length - 1, depthLabels.length - 1)];
+
+  explorer.innerHTML = `
+    <div class="main-tile animate-in">
+      <div>
+        <div class="main-tile-depth">${depthLabel}</div>
+        <div class="main-tile-title">${node.title}</div>
+        <div class="main-tile-desc">${node.desc}</div>
+      </div>
+      ${path.length > 1 ? `<button class="back-btn" onclick="goBack()">← Back</button>` : ''}
+    </div>
+    <div class="explorer-connector"></div>
+    <div class="children-col">
+      <div class="children-label">Choose a path</div>
+      ${childrenHtml}
+    </div>
+  `;
+}
+
+function doFlip() {
+  flipped = !flipped;
+  const inner = document.getElementById('flipInner');
+  if (inner) inner.classList.toggle('flipped', flipped);
+}
+
+// Contact form
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  this.style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+});
+
+// Init
+render();
+</script>
+</body>
+</html>
