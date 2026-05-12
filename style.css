@@ -5,7 +5,7 @@
    ============================================================ */
 
 /* ── GOOGLE FONTS ── */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Barlow:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400;1,600&family=Barlow:wght@300;400;500;600&display=swap');
 
 /* ── COLOUR PALETTE ── */
 :root {
@@ -15,7 +15,8 @@
   --fog:    #e8edf2;
   --cream:  #f7f5f1;
   --white:  #ffffff;
-  --gold:   #c8963e;
+  --gold:   #1a7a82;   /* accent — deep teal */
+  --gold-light: #2eb8c4; /* accent light — for italic highlights */
   --red:    #b83232;
   --text:   #1a1a1a;
   --muted:  #6b7685;
@@ -56,7 +57,7 @@ nav {
 }
 
 .nav-logo {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Spectral', serif;
   font-size: 1.25rem;
   color: white;
   text-decoration: none;
@@ -155,7 +156,7 @@ nav {
 }
 
 h1.hero-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Spectral', serif;
   font-size: clamp(2.8rem, 5vw, 4.2rem);
   color: white;
   line-height: 1.08;
@@ -253,7 +254,7 @@ h1.hero-title em {
 }
 
 .about-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Spectral', serif;
   font-size: clamp(1.8rem, 2.5vw, 2.4rem);
   color: var(--navy);
   line-height: 1.15;
@@ -321,7 +322,7 @@ h1.hero-title em {
 }
 
 .map-header-left h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Spectral', serif;
   font-size: clamp(1.8rem, 2.5vw, 2.6rem);
   color: white;
   letter-spacing: -0.02em;
@@ -403,7 +404,7 @@ h1.hero-title em {
 }
 
 .main-tile-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Spectral', serif;
   font-size: 1.6rem;
   color: white;
   line-height: 1.2;
@@ -568,7 +569,7 @@ h1.hero-title em {
 }
 
 .flip-front-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Spectral', serif;
   font-size: 1.5rem;
   color: white;
   line-height: 1.2;
@@ -619,7 +620,7 @@ h1.hero-title em {
 }
 
 .flip-back-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Spectral', serif;
   font-size: 1.2rem;
   color: var(--navy);
   margin-bottom: 1rem;
@@ -697,7 +698,7 @@ h1.hero-title em {
 }
 
 #give h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Spectral', serif;
   font-size: clamp(1.8rem, 2.5vw, 2.4rem);
   color: var(--navy);
   letter-spacing: -0.02em;
@@ -809,7 +810,7 @@ h1.hero-title em {
 }
 
 .contact-left h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Spectral', serif;
   font-size: clamp(1.8rem, 2.5vw, 2.4rem);
   color: white;
   letter-spacing: -0.02em;
